@@ -1,24 +1,3 @@
-
-# --- OpenCV shim: some packaged opencv2.framework headers expect opencv2/<module>/... paths.
-# Create symlinks inside frameworks/opencv2.framework/Headers/opencv2 to point back to ../<module>.
-OPENCV_HEADERS_DIR := $(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers
-OPENCV_SHIM_DIR := $(OPENCV_HEADERS_DIR)/opencv2
-
-before-all::
-	@if [ -d "$(OPENCV_HEADERS_DIR)" ]; then \
-		mkdir -p "$(OPENCV_SHIM_DIR)"; \
-		for d in core imgproc imgcodecs highgui video videoio features2d calib3d flann objdetect ml photo stitching dnn; do \
-			if [ -d "$(OPENCV_HEADERS_DIR)/$$d" ] && [ ! -e "$(OPENCV_SHIM_DIR)/$$d" ]; then \
-				ln -s "../$$d" "$(OPENCV_SHIM_DIR)/$$d"; \
-			fi; \
-		done; \
-		for h in core.hpp imgproc.hpp imgcodecs.hpp highgui.hpp video.hpp videoio.hpp features2d.hpp calib3d.hpp flann.hpp objdetect.hpp ml.hpp photo.hpp stitching.hpp dnn.hpp opencv_modules.hpp; do \
-			if [ -f "$(OPENCV_HEADERS_DIR)/$$h" ] && [ ! -e "$(OPENCV_SHIM_DIR)/$$h" ]; then \
-				ln -s "../$$h" "$(OPENCV_SHIM_DIR)/$$h"; \
-			fi; \
-		done; \
-	fi
-
 #export THEOS_DEVICE_IP = 192.168.101.245
 
 include $(THEOS)/makefiles/common.mk
