@@ -208,8 +208,7 @@ void processTask(UInt8 *buff, CFWriteStreamRef writeStreamRef)
     else if (taskType == TASK_COLOR_PICKER)
     {
         // Refactored: color picking now runs inside zxtouchd to reduce SpringBoard RAM/CPU usage.
-        notifyClient((UInt8*)"-1;;TASK_COLOR_PICKER moved to zxtouchd. Please update daemon.
-", writeStreamRef);
+    notifyClient((UInt8*)"-1;;TASK_COLOR_PICKER moved to zxtouchd. Please update daemon.\r\n", writeStreamRef);
     }
     else if (taskType == TASK_TEXT_INPUT)
     {
@@ -264,8 +263,7 @@ void processTask(UInt8 *buff, CFWriteStreamRef writeStreamRef)
     else if (taskType == TASK_COLOR_SEARCHER)
     {
         // Refactored: color searching now runs inside zxtouchd to reduce SpringBoard RAM/CPU usage.
-        notifyClient((UInt8*)"-1;;TASK_COLOR_SEARCHER moved to zxtouchd. Please update daemon.
-", writeStreamRef);
+    notifyClient((UInt8*)"-1;;TASK_COLOR_SEARCHER moved to zxtouchd. Please update daemon.\r\n", writeStreamRef);
     }
     else if (taskType == TASK_HARDWARE_KEY)
     {
