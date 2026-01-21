@@ -2,6 +2,14 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+
+static BOOL ZXShouldDisableInZxtouchApp(void) {
+    @autoreleasepool {
+        NSString *bid = [[NSBundle mainBundle] bundleIdentifier];
+        return (bid != nil) && [bid isEqualToString:@"com.zjx.zxtouch"];
+    }
+}
+
 #import <CoreFoundation/CFMessagePort.h>
 #import <Foundation/NSDistributedNotificationCenter.h>
 #import <execinfo.h>
@@ -129,3 +137,10 @@
 	}
 
 %end
+
+%ctor {
+    if (ZXShouldDisableInZxtouchApp()) {
+        return;
+    }
+    %init;
+}
