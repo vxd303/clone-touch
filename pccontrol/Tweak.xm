@@ -32,8 +32,6 @@
 #include "AlertBox.h"
 #include "Popup.h"
 #include "Record.h"
-#include "TemplateMatch.h"
-#include "ScreenMatch.h"
 #include "Toast.h"
 #include "ColorPicker.h"
 #include "Play.h"
