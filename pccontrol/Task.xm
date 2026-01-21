@@ -6,7 +6,6 @@
 #include "Play.h"
 #include "SocketServer.h"
 #include "Toast.h"
-#include "ColorPicker.h"
 #include "UIKeyboard.h"
 #include "DeviceInfo.h"
 #include "TouchIndicator/TouchIndicatorWindow.h"
@@ -208,19 +207,9 @@ void processTask(UInt8 *buff, CFWriteStreamRef writeStreamRef)
     }
     else if (taskType == TASK_COLOR_PICKER)
     {
-        @autoreleasepool {
-            NSError *err = nil;
-            NSDictionary *rgb = getRGBFromRawData(eventData, &err); 
-            if (err)
-            {
-                notifyClient((UInt8*)[[err localizedDescription] UTF8String], writeStreamRef);
-            }
-            else
-            {
-                notifyClient((UInt8*)[[NSString stringWithFormat:@"0;;%d;;%d;;%d\r\n", [rgb[@"red"] intValue], [rgb[@"green"] intValue], [rgb[@"blue"] intValue]] UTF8String], writeStreamRef);
-            }
-            rgb = nil;
-        }
+        // Refactored: color picking now runs inside zxtouchd to reduce SpringBoard RAM/CPU usage.
+        notifyClient((UInt8*)"-1;;TASK_COLOR_PICKER moved to zxtouchd. Please update daemon.
+", writeStreamRef);
     }
     else if (taskType == TASK_TEXT_INPUT)
     {
@@ -274,18 +263,9 @@ void processTask(UInt8 *buff, CFWriteStreamRef writeStreamRef)
     }
     else if (taskType == TASK_COLOR_SEARCHER)
     {
-        @autoreleasepool {
-            NSError *err = nil;
-            NSString *returndata = searchRGBFromRawData(eventData,  &err);
-            if (err)
-            {
-                notifyClient((UInt8*)[[err localizedDescription] UTF8String], writeStreamRef);
-            }
-            else
-            {
-                notifyClient((UInt8*)[[NSString stringWithFormat:@"0;;%@\r\n", returndata] UTF8String], writeStreamRef);
-            }
-        }
+        // Refactored: color searching now runs inside zxtouchd to reduce SpringBoard RAM/CPU usage.
+        notifyClient((UInt8*)"-1;;TASK_COLOR_SEARCHER moved to zxtouchd. Please update daemon.
+", writeStreamRef);
     }
     else if (taskType == TASK_HARDWARE_KEY)
     {
