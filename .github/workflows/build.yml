@@ -42,6 +42,17 @@ jobs:
             echo "Missing frameworks/opencv2.framework. Please add the prebuilt framework to the repo."
             exit 1
           fi
+          
+      - name: Fix DEBIAN maintainer script permissions
+        run: |
+          set -eux
+          if [ -d layout/DEBIAN ]; then
+            chmod 755 layout/DEBIAN/preinst  || true
+            chmod 755 layout/DEBIAN/postinst || true
+            chmod 755 layout/DEBIAN/prerm    || true
+            chmod 755 layout/DEBIAN/postrm   || true
+            chmod 755 layout/DEBIAN/config   || true
+          fi
 
       - name: Build package
         run: |
