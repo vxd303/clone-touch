@@ -20,10 +20,6 @@ zxtouchb_CFLAGS = -fobjc-arc -Wno-error -Wno-module-import-in-extern-c -O2 -s -D
 zxtouchd_CCFLAGS = -std=c++11
 
 # Ensure OpenCV headers are found for ObjC++ tool builds (Xcode 16+ is stricter)
-zxtouchd_CPPFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Versions/A/Headers
-zxtouchd_CPPFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers
-zxtouchb_CPPFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Versions/A/Headers
-zxtouchb_CPPFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers
 zxtouchb_CCFLAGS = -std=c++11
 
 zxtouchd_CFLAGS+= -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers
@@ -45,6 +41,13 @@ zxtouchb_CCFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Versions
 
 zxtouchb_CFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers
 zxtouchb_CCFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers
+
+
+### OpenCV header search paths (tool targets): use ADDITIONAL_*FLAGS (THEOS) so ObjC++ .xm->.mm picks them up reliably
+zxtouchd_ADDITIONAL_CFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Versions/A/Headers -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers
+zxtouchd_ADDITIONAL_CCFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Versions/A/Headers -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers
+zxtouchb_ADDITIONAL_CFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Versions/A/Headers -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers
+zxtouchb_ADDITIONAL_CCFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Versions/A/Headers -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers
 
 zxtouchd_EXTRA_FRAMEWORKS = opencv2
 zxtouchb_EXTRA_FRAMEWORKS = opencv2
