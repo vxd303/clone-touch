@@ -14,7 +14,9 @@
 #ifdef __cplusplus
   #undef NO
   #undef YES
-  #import <opencv2/opencv.hpp>
+  // Prefer a normal include so the header can be found via explicit -I paths
+  // even if framework-style header maps are not picked up in tool builds.
+  #include "opencv2/opencv.hpp"
 #endif // __cplusplus
 
 #endif
@@ -31,10 +33,10 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreMedia/CoreMedia.h>
-#if __has_include(<opencv2/imgcodecs/ios.h>)
-  #import <opencv2/imgcodecs/ios.h>
-#elif __has_include(<imgcodecs/ios.h>)
-  #import <imgcodecs/ios.h>
+#if __has_include("opencv2/imgcodecs/ios.h")
+  #include "opencv2/imgcodecs/ios.h"
+#elif __has_include("imgcodecs/ios.h")
+  #include "imgcodecs/ios.h"
 #else
   // Some OpenCV builds omit iOS helpers; keep optional.
 #endif
