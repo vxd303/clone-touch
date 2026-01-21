@@ -8,9 +8,13 @@
 #define TEMPLATE_MATCH_H
 
 #ifdef __cplusplus
+  // Keep the include style consistent with the previously working build.
+  // The bundled opencv2.framework in this repo exposes headers via a flat
+  // Headers/ layout where <opencv.hpp> is the supported umbrella header.
   #undef NO
   #undef YES
   #import <opencv.hpp>
+  #import <imgcodecs/ios.h>
 #endif
 
 
@@ -25,7 +29,6 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreMedia/CoreMedia.h>
-#import <imgcodecs/ios.h>
 
 @interface TemplateMatch : NSObject
 
