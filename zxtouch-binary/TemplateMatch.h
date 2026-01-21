@@ -16,12 +16,20 @@
   #undef YES
   #if __has_include(<opencv2/opencv.hpp>)
     #include <opencv2/opencv.hpp>
+  #elif __has_include("Headers/opencv2.h")
+    // Some iOS OpenCV frameworks ship with a flat Headers/ layout (no opencv2/ folder).
+    // Since we add -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework, we can include via "Headers/...".
+    #include "Headers/opencv2.h"
+  #elif __has_include("Headers/opencv.hpp")
+    #include "Headers/opencv.hpp"
   #elif __has_include(<opencv.hpp>)
     #include <opencv.hpp>
   #elif __has_include(<opencv2.hpp>)
     #include <opencv2.hpp>
   #elif __has_include(<opencv2.h>)
     #include <opencv2.h>
+  #elif __has_include(<opencv.h>)
+    #include <opencv.h>
   #else
     #error "OpenCV headers not found. Check frameworks/opencv2.framework and header search paths."
   #endif
