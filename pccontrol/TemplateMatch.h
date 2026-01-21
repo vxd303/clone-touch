@@ -5,7 +5,18 @@
 #ifdef __cplusplus
 #undef NO
 #undef YES
-#import <opencv2/opencv.hpp>
+// OpenCV headers may be installed with different paths depending on how
+// opencv2.framework was built/copied into ZXTouch/frameworks.
+// Prefer the common <opencv2/opencv.hpp>, but fall back to umbrella headers.
+  #if __has_include(<opencv2/opencv.hpp>)
+    #include <opencv2/opencv.hpp>
+  #elif __has_include(<opencv.hpp>)
+    #include <opencv.hpp>
+  #elif __has_include(<opencv2.hpp>)
+    #include <opencv2.hpp>
+  #else
+    #error "OpenCV headers not found. Ensure frameworks/opencv2.framework is present and header search paths are set."
+  #endif
 #endif
 
 
