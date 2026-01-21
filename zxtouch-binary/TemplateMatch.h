@@ -1,12 +1,8 @@
-// NOTE:
-// The OpenCV iOS framework bundled in this repo can have different header
-// layouts depending on how it was built/copied. Some distributions expose:
-//   opencv2.framework/Headers/opencv2/opencv.hpp
-// others expose a flat layout under Headers/.
-//
-// To keep builds working across both layouts (local + CI), we:
-//   1) Add -I.../opencv2.framework/Headers (and /Headers/opencv2) in Makefile.
-//   2) Use tolerant includes here.
+// OpenCV headers in this repo's opencv2.framework are exposed flat under:
+//   frameworks/opencv2.framework/Headers/
+// The original project code includes <opencv.hpp> and <imgcodecs/ios.h>.
+// For tool builds (zxtouchd/zxtouchb), we add explicit -I to that Headers/
+// directory in zxtouch-binary/Makefile, so these includes resolve reliably.
 
 #ifndef TEMPLATE_MATCH_H
 #define TEMPLATE_MATCH_H
@@ -14,11 +10,7 @@
 #ifdef __cplusplus
   #undef NO
   #undef YES
-  // Prefer a normal include so the header can be found via explicit -I paths
-  // even if framework-style header maps are not picked up in tool builds.
-  #include "opencv2/opencv.hpp"
-#endif // __cplusplus
-
+  #import <opencv.hpp>
 #endif
 
 
@@ -33,13 +25,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreMedia/CoreMedia.h>
-#if __has_include("opencv2/imgcodecs/ios.h")
-  #include "opencv2/imgcodecs/ios.h"
-#elif __has_include("imgcodecs/ios.h")
-  #include "imgcodecs/ios.h"
-#else
-  // Some OpenCV builds omit iOS helpers; keep optional.
-#endif
+#import <imgcodecs/ios.h>
 
 @interface TemplateMatch : NSObject
 
