@@ -21,6 +21,8 @@ zxtouchd_CCFLAGS = -std=c++11
 zxtouchb_CCFLAGS = -std=c++11
 
 zxtouchd_CFLAGS += -F$(THEOS_PROJECT_DIR)/frameworks
+zxtouchd_CFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework
+zxtouchd_CCFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework
 zxtouchd_LDFLAGS += -F$(THEOS_PROJECT_DIR)/frameworks
 zxtouchd_CFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Versions/A/Headers
 zxtouchd_CCFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Versions/A/Headers
@@ -34,6 +36,8 @@ zxtouchd_CFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers/o
 zxtouchd_CCFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers/opencv2
 
 zxtouchb_CFLAGS += -F$(THEOS_PROJECT_DIR)/frameworks
+zxtouchb_CFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework
+zxtouchb_CCFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework
 zxtouchb_LDFLAGS += -F$(THEOS_PROJECT_DIR)/frameworks
 zxtouchb_CFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Versions/A/Headers
 zxtouchb_CCFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Versions/A/Headers
