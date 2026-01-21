@@ -50,11 +50,9 @@ static bool shouldRouteToSpringBoard(int taskType)
         case 19: // TASK_PLAY_SCRIPT
         case 20: // TASK_PLAY_SCRIPT_FORCE_STOP
         case 22: // TASK_SHOW_TOAST
-        case 23: // TASK_COLOR_PICKER
         case 24: // TASK_TEXT_INPUT
         case 25: // TASK_GET_DEVICE_INFO
         case 26: // TASK_TOUCH_INDICATOR
-        case 28: // TASK_COLOR_SEARCHER
         case 30: // TASK_HARDWARE_KEY
         case 31: // TASK_APP_KILL
         case 32: // TASK_APP_STATE
@@ -237,30 +235,6 @@ static void handleDaemonMessage(UInt8 *buff, CFWriteStreamRef client)
                     NSString *resp = [NSString stringWithFormat:@"0;;%.2f;;%.2f;;%.2f;;%.2f\r\n",
                                       result.origin.x, result.origin.y, result.size.width, result.size.height];
                     writeCString([resp UTF8String]);
-                }
-                break;
-            }
-            case 27: { // TASK_TEXT_RECOGNIZER
-                NSError *err = nil;
-                NSString *text = performTextRecognizerTextFromRawData(eventData, &err);
-                if (err) {
-                    writeCString([[err localizedDescription] UTF8String]);
-                } else {
-                    NSString *resp = [NSString stringWithFormat:@"0;;%@\r\n", text ?: @""];
-                    writeCString([resp UTF8String]);
-                }
-                break;
-            }
-            case 29: { // TASK_SCREENSHOT
-                NSError *err = nil;
-                NSString *resultPath = handleScreenshotTaskFromRawData(eventData, &err);
-                if (err) {
-                    writeCString([[err localizedDescription] UTF8String]);
-                } else if (resultPath) {
-                    NSString *resp = [NSString stringWithFormat:@"0;;%@\r\n", resultPath];
-                    writeCString([resp UTF8String]);
-                } else {
-                    writeCString("0\r\n");
                 }
                 break;
             }
