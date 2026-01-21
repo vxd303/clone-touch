@@ -25,10 +25,23 @@ zxtouchd_LDFLAGS += -F$(THEOS_PROJECT_DIR)/frameworks
 zxtouchd_CFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Versions/A/Headers
 zxtouchd_CCFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Versions/A/Headers
 
+# Some opencv2.framework bundles (including the one committed in this repo)
+# expose headers under "Headers" (without a Versions/ directory), and may be
+# either flat or nested under Headers/opencv2.
+zxtouchd_CFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers
+zxtouchd_CCFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers
+zxtouchd_CFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers/opencv2
+zxtouchd_CCFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers/opencv2
+
 zxtouchb_CFLAGS += -F$(THEOS_PROJECT_DIR)/frameworks
 zxtouchb_LDFLAGS += -F$(THEOS_PROJECT_DIR)/frameworks
 zxtouchb_CFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Versions/A/Headers
 zxtouchb_CCFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Versions/A/Headers
+
+zxtouchb_CFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers
+zxtouchb_CCFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers
+zxtouchb_CFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers/opencv2
+zxtouchb_CCFLAGS += -I$(THEOS_PROJECT_DIR)/frameworks/opencv2.framework/Headers/opencv2
 
 zxtouchd_EXTRA_FRAMEWORKS = opencv2
 zxtouchb_EXTRA_FRAMEWORKS = opencv2
