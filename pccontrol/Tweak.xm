@@ -33,7 +33,6 @@
 #include "Popup.h"
 #include "Record.h"
 #include "Toast.h"
-#include "ColorPicker.h"
 #include "Play.h"
 #include "TouchIndicator/TouchIndicatorWindow.h"
 #include "Activator/ActivatorListener.h"
