@@ -261,12 +261,25 @@ static BOOL isPlaying = false;
         isPlaying = false;
         return;
     }
-    NSString *commandToRun = [NSString stringWithFormat:@"sudo zxtouchb -e \"python3 -u \\\"%@\\\" 2>&1 | /var/mobile/Library/ZXTouch/coreutils/ScriptRuntime/add_datetime.sh\" >> /var/mobile/Library/ZXTouch/coreutils/ScriptRuntime/output", filePath];
+    // Run python directly instead of relying on `sudo zxtouchb -e`.
+    // Reason: the wrapper may be missing on some devices/environments and would fail silently,
+    // causing scripts to "start" but never perform any action.
+    //
+    // We keep the same output formatting as before.
+    NSString *runtimeDir = @"/var/mobile/Library/ZXTouch/coreutils/ScriptRuntime";
+    NSString *commandToRun = [NSString stringWithFormat:@"cd \"%@\"; python3 -u \\\"%@\\\" 2>&1 | ./add_datetime.sh >> ./output", runtimeDir, filePath];
     NSLog(@"com.zjx.springboard: command to run for running py file %@", commandToRun);
 
     // here I made it run in background because of a weird thing: ios objc cannot call second system() if the first system() does not return
     //scriptPlayForceStop = true;
-    system2([commandToRun UTF8String], NULL, NULL);
+    int status = system2([commandToRun UTF8String], NULL, NULL);
+    if (status != 0) {
+        showAlertBox(@"Error", [NSString stringWithFormat:@"Python exited with status %d. Check %s/output for details.", status, [runtimeDir UTF8String]], 999);
+        // Ensure the player is unblocked and state is consistent.
+        isPlaying = false;
+        [self playHasStopped];
+        return;
+    }
     // add force stop
     [self playHasStopped];
 }
