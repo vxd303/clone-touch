@@ -40,6 +40,20 @@
 #include "IPCConstants.h"
 #include "IPCMessagePort.h"
 
+// Simple runtime marker so we can verify Substrate injection without pgrep/otool/strings.
+__attribute__((constructor))
+static void zxtouch_pccontrol_loaded_marker()
+{
+    @autoreleasepool {
+        [[NSFileManager defaultManager] createDirectoryAtPath:@"/var/mobile/Library/ZXTouch"
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:nil];
+        NSString *msg = [NSString stringWithFormat:@"pccontrol.dylib loaded at %@\n", [[NSDate date] description]];
+        [msg writeToFile:@"/var/mobile/Library/ZXTouch/pccontrol_loaded" atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    }
+}
+
 
 #define DEBUG_MODE
 
